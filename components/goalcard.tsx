@@ -1,3 +1,4 @@
+import ProgressBar from "@/components/progressbar";
 import { useThemeColors } from "@/lib/theme";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
@@ -19,11 +20,17 @@ const TILE: Record<Accent, string> = {
   violet: "bg-violet-100",
 };
 
-const FILL: Record<Accent, string> = {
-  blue: "bg-blue-600",
-  orange: "bg-orange-500",
-  green: "bg-green-600",
-  violet: "bg-violet-600",
+/**
+ * Accent fills for the progress bar, as literal hex.
+ *
+ * Hex rather than a class because `ProgressBar` animates a colour prop — it
+ * draws the fill with a transform, which a NativeWind class cannot drive.
+ */
+const FILL_HEX: Record<Accent, string> = {
+  blue: "#2563EB",
+  orange: "#F97316",
+  green: "#16A34A",
+  violet: "#7C3AED",
 };
 
 const ICON_COLOR: Record<Accent, string> = {
@@ -50,8 +57,10 @@ interface Props {
   progress?: number;
   /** Human-readable time remaining, e.g. "10 months left". */
   timeLeft?: string;
-  /** Optional hint shown instead of time remaining, e.g. "Completed". */
+  /** Optional handler for the whole row. */
   onPress?: () => void;
+  /** Stagger for the bar's sweep, in ms, so a list fills in sequence. */
+  animationDelay?: number;
 }
 
 /**
@@ -68,6 +77,7 @@ export default function GoalCard({
   progress = 0.25,
   timeLeft = "10 months left",
   onPress,
+  animationDelay = 0,
 }: Props) {
   // Guard against callers passing an out-of-range or NaN ratio: the bar width
   // is a percentage string, and `NaN%` would blank the whole bar.
@@ -102,15 +112,15 @@ export default function GoalCard({
           </Text>
         </View>
 
-        {/* Progress bar */}
+        {/* Progress bar — animates to its value on mount and whenever it
+            changes, so an updated amount moves rather than snapping. */}
         <View className="flex-row items-center gap-2">
-          <View
-            className="flex-1 h-2 rounded-full overflow-hidden"
-            style={{ backgroundColor: c.surfaceMuted }}
-          >
-            <View
-              className={`h-full rounded-full ${FILL[accent]}`}
-              style={{ width: `${percent}%` }}
+          <View className="flex-1">
+            <ProgressBar
+              progress={ratio}
+              trackColor={c.surfaceMuted}
+              fillColor={FILL_HEX[accent]}
+              delay={animationDelay}
             />
           </View>
           <Text className="text-sm font-semibold" style={{ color: c.textMuted }}>

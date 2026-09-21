@@ -1,4 +1,5 @@
 import SaveCard from "@/components/savecard";
+import SavingBanner from "@/components/savingbanner";
 import { useThemeColors } from "@/lib/theme";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
@@ -58,6 +59,9 @@ export default function SaveScreen() {
           color="#FFEDD5"
           iconColor="#F97316"
         />
+
+        {/* Illustration banner: the artwork plus its caption. */}
+        <SavingBanner />
 
         {/* Tip banner. The design draws this dark on a light page; keeping it
             as an "inverse" surface is deliberate, and it still works under a

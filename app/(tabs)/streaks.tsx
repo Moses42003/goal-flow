@@ -1,3 +1,4 @@
+import ProgressBar from "@/components/progressbar";
 import { useThemeColors } from "@/lib/theme";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
@@ -168,15 +169,12 @@ export default function StreaksScreen() {
             </Text>
             <Text className="text-sm font-semibold text-orange-600">6 / 7</Text>
           </View>
-          <View
-            className="h-2.5 rounded-full overflow-hidden"
-            style={{ backgroundColor: c.surfaceMuted }}
-          >
-            <View
-              className="h-full rounded-full bg-orange-500"
-              style={{ width: "86%" }}
-            />
-          </View>
+          <ProgressBar
+            progress={6 / 7}
+            trackColor={c.surfaceMuted}
+            fillColor="#F97316"
+            height={10}
+          />
           <Text className="text-sm font-medium mt-3" style={{ color: c.textMuted }}>
             One more day to complete your week.
           </Text>

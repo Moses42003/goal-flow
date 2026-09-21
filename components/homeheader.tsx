@@ -1,64 +1,136 @@
-import { LinearGradient } from "expo-linear-gradient";
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useState } from "react";
+import { LayoutChangeEvent, StyleSheet, View } from "react-native";
+import Svg, {
+  Defs,
+  Path,
+  Stop,
+  LinearGradient as SvgGradient,
+} from "react-native-svg";
 
 /**
  * The blue "cloud" backdrop behind the Home screen's greeting.
  *
- * The design fills the top of Home with a blue field whose lower edge is a soft
- * wavy curve, and the greeting and the Total Savings card sit on top of it. The
- * curve matters: a straight bottom edge reads as a header bar rather than as a
- * sky, which is why this is built from two overlapping ellipses rather than a
- * single rectangle.
+ * The design's blue field ends in a soft S-wave — it dips low on the left, rises
+ * through the middle and settles slightly lower again on the right — with a pale
+ * mint band following the same contour just beneath it. The greeting and the
+ * Total Savings card both sit on top.
  *
- * How the curve works — two very wide, very short rounded views sit at the
- * bottom. The fill sits a little LOWER on the left than the right, so the edge
- * sweeps down and back up instead of being level. Because a `rounded-full` view
- * of this aspect ratio is effectively an ellipse, the visible boundary is a
- * smooth arc rather than a corner.
+ * That contour is a genuine cubic curve, so it is drawn as an SVG path rather
+ * than assembled from views: arcs made of `borderRadius` can only ever produce
+ * circular segments, and a circular segment cannot make an S. The wave is
+ * expressed in `viewBox` units and scaled with `preserveAspectRatio="none"`, so
+ * the same path fills any screen width without the curve distorting into a
+ * spike on wide devices.
  *
  * Implemented as an absolutely-positioned layer rather than a wrapper so the
  * screen's content stays in normal flow, and `pointerEvents="none"` keeps it
  * purely decorative — it never intercepts a tap meant for a control.
  */
 export default function HomeHeaderBackdrop({
-  /** Gradient stops, deep first. */
-  colors = ["#1E5FE0", "#2F7BF6", "#5EB0F8", "#DCEFFB"],
+  /** Wave height in viewBox units — how deep the dip on the left goes. */
+  waveDepth = 46,
   /** Height of the blue field, including the part the card overlaps. */
-  height = 300,
+  height = 320,
 }: {
-  colors?: readonly [string, string, ...string[]];
+  waveDepth?: number;
   height?: number;
 }) {
-  return (
-    <View pointerEvents="none" style={[styles.wrap, { height }]}>
-      <LinearGradient
-        colors={colors}
-        locations={[0, 0.38, 0.72, 1]}
-        start={{ x: 0.15, y: 0 }}
-        end={{ x: 0.85, y: 1 }}
-        style={StyleSheet.absoluteFill}
-      >
-        {/* Cloud lobes — wide, shallow ellipses tinted lighter than the field,
-            hinting at drifting cloud without needing an image asset. */}
-        <View className="absolute -left-16 top-16 w-72 h-40 rounded-full bg-white/10" />
-        <View className="absolute -right-20 top-4 w-64 h-36 rounded-full bg-white/10" />
-        <View className="absolute left-10 top-28 w-56 h-32 rounded-full bg-white/[0.07]" />
-      </LinearGradient>
+  // Measured rather than derived from window width, so the curve stays correct
+  // inside a split view or on a foldable, where the screen is not the container.
+  const [width, setWidth] = useState(0);
 
-      {/* Bottom edge. Two ellipses whose centres sit at different heights give
-          the boundary a gentle asymmetric sweep. `rounded-t-full` (not
-          `rounded-full`) keeps the bottom of each shape flat and off-screen, so
-          only the top arc is ever visible. */}
-      <View
-        style={[styles.curve, { bottom: -34, backgroundColor: colors[0] }]}
-        className="-left-24 rounded-t-full"
-      />
-      <View
-        style={[styles.curve, { bottom: -58, backgroundColor: colors[0] }]}
-        className="-right-24 rounded-t-full"
-      />
+  const onLayout = (e: LayoutChangeEvent) =>
+    setWidth(e.nativeEvent.layout.width);
+
+  const VB_W = 400;
+  const VB_H = 300;
+  const waveY = VB_H - waveDepth;
+
+  /**
+   * The blue field plus its wavy lower edge.
+   *
+   * The two `C` segments share a horizontal tangent at their meeting point, so
+   * the join is smooth — without that the wave creases at the middle.
+   */
+  const bluePath = [
+    `M 0 0`,
+    `H ${VB_W}`,
+    `V ${waveY + 18}`,
+    // Sweeps down-left, then levels out toward the centre.
+    `C ${VB_W * 0.66} ${waveY + 60}, ${VB_W * 0.4} ${waveY - 26}, 0 ${waveY - 6}`,
+    `Z`,
+  ].join(" ");
+
+  /**
+   * The pale mint band, tracing the same contour offset downward.
+   *
+   * Drawn as its own shape rather than as a border on the blue, because the two
+   * have different colours and the band is wider on the left where the wave
+   * dips deepest.
+   */
+  const mintPath = [
+    `M 0 ${waveY - 6}`,
+    `C ${VB_W * 0.4} ${waveY - 26}, ${VB_W * 0.66} ${waveY + 60}, ${VB_W} ${waveY + 18}`,
+    `V ${VB_H}`,
+    `H 0`,
+    `Z`,
+  ].join(" ");
+
+  return (
+    <View
+      pointerEvents="none"
+      onLayout={onLayout}
+      style={[styles.wrap, { height }]}
+    >
+      {width > 0 && (
+        <Svg
+          width={width}
+          height={height}
+          viewBox={`0 0 ${VB_W} ${VB_H}`}
+          preserveAspectRatio="none"
+        >
+          <Defs>
+            {/* Diagonal azure wash, matching the design's lighting. */}
+            <SvgGradient id="sky" x1="0.1" y1="0" x2="0.9" y2="1">
+              <Stop offset="0" stopColor="#1E5FE0" />
+              <Stop offset="0.45" stopColor="#2F7BF6" />
+              <Stop offset="0.8" stopColor="#6FB6F9" />
+              <Stop offset="1" stopColor="#BBDDFB" />
+            </SvgGradient>
+            {/* Mint band beneath the wave. */}
+            <SvgGradient id="mint" x1="0" y1="0" x2="1" y2="1">
+              <Stop offset="0" stopColor="#DCF2E8" />
+              <Stop offset="1" stopColor="#EFFAF5" />
+            </SvgGradient>
+          </Defs>
+
+          <Path d={mintPath} fill="url(#mint)" />
+          <Path d={bluePath} fill="url(#sky)" />
+
+          {/* Cloud lobes. Wide, shallow ellipses in slightly lighter blue, so
+              the field reads as sky rather than as a flat gradient. */}
+          <EllipseLobes />
+        </Svg>
+      )}
     </View>
+  );
+}
+
+/** Cloud highlights. Kept separate purely to keep the main render readable. */
+function EllipseLobes() {
+  return (
+    <>
+      <Path
+        d="M -40 120 a 150 90 0 1 0 300 0 a 150 90 0 1 0 -300 0"
+        fill="#FFFFFF"
+        fillOpacity={0.08}
+      />
+      <Path
+        d="M 200 60 a 140 80 0 1 0 280 0 a 140 80 0 1 0 -280 0"
+        fill="#FFFFFF"
+        fillOpacity={0.08}
+      />
+    </>
   );
 }
 
@@ -69,12 +141,5 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     overflow: "hidden",
-  },
-  // Deliberately far wider than it is tall: at this ratio the rounded top is a
-  // shallow arc, which is what reads as a cloud edge rather than a bubble.
-  curve: {
-    position: "absolute",
-    width: 460,
-    height: 150,
   },
 });
