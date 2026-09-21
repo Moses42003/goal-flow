@@ -1,3 +1,4 @@
+import { useThemeColors } from "@/lib/theme";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -70,6 +71,7 @@ export default function GoalCard({
 }: Props) {
   // Guard against callers passing an out-of-range or NaN ratio: the bar width
   // is a percentage string, and `NaN%` would blank the whole bar.
+  const c = useThemeColors();
   const ratio = Number.isFinite(progress) ? Math.min(Math.max(progress, 0), 1) : 0;
   const percent = Math.round(ratio * 100);
 
@@ -77,7 +79,8 @@ export default function GoalCard({
     <TouchableOpacity
       activeOpacity={0.7}
       onPress={onPress}
-      className="border-[1px] border-gray-200 bg-white rounded-2xl p-3 my-3 flex-row gap-3"
+      className="rounded-2xl p-3 my-3 flex-row gap-3"
+      style={{ backgroundColor: c.surface, borderWidth: 1, borderColor: c.border }}
     >
       <View
         className={`w-16 h-16 rounded-2xl items-center justify-center ${TILE[accent]}`}
@@ -86,33 +89,40 @@ export default function GoalCard({
       </View>
 
       <View className="gap-1.5 flex-1 justify-center">
-        <Text className="text-xl font-semibold">{title}</Text>
+        <Text className="text-xl font-semibold" style={{ color: c.text }}>
+          {title}
+        </Text>
 
         <View className="flex-row items-end gap-1.5">
-          <Text className="text-lg font-semibold">
+          <Text className="text-lg font-semibold" style={{ color: c.text }}>
             {currency} {saved}
           </Text>
-          <Text className="text-base font-medium text-gray-500">
+          <Text className="text-base font-medium" style={{ color: c.textMuted }}>
             / {currency} {target}
           </Text>
         </View>
 
         {/* Progress bar */}
         <View className="flex-row items-center gap-2">
-          <View className="flex-1 h-2 rounded-full bg-gray-200 overflow-hidden">
+          <View
+            className="flex-1 h-2 rounded-full overflow-hidden"
+            style={{ backgroundColor: c.surfaceMuted }}
+          >
             <View
               className={`h-full rounded-full ${FILL[accent]}`}
               style={{ width: `${percent}%` }}
             />
           </View>
-          <Text className="text-sm font-semibold text-gray-600">
+          <Text className="text-sm font-semibold" style={{ color: c.textMuted }}>
             {percent}%
           </Text>
         </View>
 
         <View className="flex-row items-center gap-1">
-          <Ionicons name="calendar-outline" size={14} color="gray" />
-          <Text className="text-sm text-gray-500 font-medium">{timeLeft}</Text>
+          <Ionicons name="calendar-outline" size={14} color={c.textMuted} />
+          <Text className="text-sm font-medium" style={{ color: c.textMuted }}>
+            {timeLeft}
+          </Text>
         </View>
       </View>
 

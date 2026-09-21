@@ -1,7 +1,9 @@
 import GoalCard from "@/components/goalcard";
+import HomeHeaderBackdrop from "@/components/homeheader";
 import QuickAction from "@/components/quickaction";
 import StreakSaveCard from "@/components/streaksavecarc";
 import TotalSavingCard from "@/components/totalsavecard";
+import { useThemeColors } from "@/lib/theme";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import {
@@ -14,16 +16,21 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeTabScreen() {
+  const c = useThemeColors();
+
   return (
     <SafeAreaView className="flex-1 pt-5 px-5 bg-white">
+      {/* Blue cloud field behind the greeting and the savings card. */}
+      <HomeHeaderBackdrop />
       {/* Header: greeting on the left, bell + avatar on the right. */}
-      <View className="flex-row items-start justify-between mb-1">
+      {/* Greeting sits *on* the blue field, so its text is white. */}
+      <View className="flex-row items-start justify-between mb-2 pt-2">
         <View className="gap-0.5 flex-1">
-          <Text className="text-xl font-medium text-gray-600">
+          <Text className="text-base font-medium text-blue-100">
             Good morning,
           </Text>
-          <Text className="text-3xl font-bold">Moses</Text>
-          <Text className="text-sm text-gray-500 font-medium mt-1">
+          <Text className="text-3xl font-bold text-white">Moses</Text>
+          <Text className="text-sm text-blue-100 font-medium mt-1">
             Keep going! Your future self will thank you.
           </Text>
         </View>
@@ -31,16 +38,16 @@ export default function HomeTabScreen() {
         <View className="flex-row items-center gap-3">
           <TouchableOpacity
             activeOpacity={0.6}
-            className="bg-blue-50 rounded-full w-11 h-11 items-center justify-center border-[1px] border-blue-100"
+            className="bg-white/20 rounded-full w-11 h-11 items-center justify-center"
           >
-            <Ionicons name="notifications-outline" size={22} color="#2563EB" />
+            <Ionicons name="notifications-outline" size={22} color="#FFFFFF" />
           </TouchableOpacity>
 
           <TouchableOpacity
             activeOpacity={0.6}
-            className="rounded-full w-12 h-12 bg-blue-600 items-center justify-center"
+            className="rounded-full w-12 h-12 bg-white items-center justify-center"
           >
-            <Ionicons name="person" size={24} color="#FFFFFF" />
+            <Ionicons name="person" size={24} color="#1D4ED8" />
           </TouchableOpacity>
         </View>
       </View>
@@ -48,8 +55,10 @@ export default function HomeTabScreen() {
       <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
         <TotalSavingCard />
 
-        <View className="flex-row items-center justify-between mt-2">
-          <Text className="text-xl font-bold">Your Goals</Text>
+        <View className="flex-row items-center justify-between mt-4">
+          <Text className="text-xl font-bold" style={{ color: c.text }}>
+            Your Goals
+          </Text>
           <TouchableOpacity activeOpacity={0.6}>
             <Text className="text-blue-600 font-semibold">View all</Text>
           </TouchableOpacity>

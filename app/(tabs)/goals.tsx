@@ -1,4 +1,5 @@
 import GoalCard from "@/components/goalcard";
+import { useThemeColors } from "@/lib/theme";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import {
@@ -11,12 +12,16 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function GoalsScreen() {
+  const c = useThemeColors();
+
   return (
-    <SafeAreaView className="flex-1 pt-5 px-5 bg-white">
+    <SafeAreaView className="flex-1 pt-5 px-5" style={{ backgroundColor: c.background }}>
       <View className="flex-row items-start justify-between mb-4">
         <View className="gap-0.5 flex-1">
-          <Text className="text-3xl font-bold">Goals</Text>
-          <Text className="text-base text-gray-500 font-medium">
+          <Text className="text-3xl font-bold" style={{ color: c.text }}>
+            Goals
+          </Text>
+          <Text className="text-base font-medium" style={{ color: c.textMuted }}>
             Turn your dreams into plans.
           </Text>
         </View>

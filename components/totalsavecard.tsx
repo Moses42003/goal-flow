@@ -34,47 +34,48 @@ export default function TotalSavingCard({
 }: Props) {
   return (
     <LinearGradient
-      // Azure at the top-left, fading to a pale mint-white at the bottom-right.
-      colors={["#1D6FE8", "#4FA3F7", "#C7E9F5", "#EEFBF4"]}
-      locations={[0, 0.42, 0.78, 1]}
+      // The card itself is the pale card, not the blue: the blue is the sky
+      // *behind* it, showing through. So the gradient here is only a faint
+      // mint-to-white wash, which is what gives the design's frosted look.
+      colors={["#EAF7F1", "#F4FBF8", "#FFFFFF"]}
+      locations={[0, 0.55, 1]}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
       className="rounded-3xl my-4"
       style={{ borderRadius: 24 }}
     >
       <View className="p-5">
-        <View className="flex-row items-start justify-between">
-          <View className="flex-row items-center gap-4 flex-1">
-            {/* Wallet badge: white tile on the blue end of the gradient. */}
-            <View className="bg-white rounded-2xl w-16 h-16 items-center justify-center shadow-sm">
-              <Ionicons name="wallet" size={30} color="#1D6FE8" />
-            </View>
+        {/* Label + visibility toggle on one line, above the figure. */}
+        <View className="flex-row items-center justify-between">
+          <Text className="text-base font-semibold text-slate-500">
+            {label}
+          </Text>
 
-            <View className="flex-1 gap-0.5">
-              <Text className="text-base font-medium text-white/90">
-                {label}
-              </Text>
-
-              <View className="flex-row items-end gap-1.5">
-                <Text className="text-xl font-bold text-white">{currency}</Text>
-                <Text className="text-3xl font-bold text-white">{amount}</Text>
-              </View>
-            </View>
-          </View>
-
-          {/* Visibility toggle shown in the design's top-right corner. */}
-          <TouchableOpacity activeOpacity={0.6} className="pt-1">
-            <Ionicons name="eye-outline" size={22} color="#FFFFFF" />
+          <TouchableOpacity activeOpacity={0.6}>
+            <Ionicons name="eye-outline" size={20} color="#94A3B8" />
           </TouchableOpacity>
         </View>
 
-        {/* Delta row — sits over the pale end, so it uses a dark green. */}
-        <View className="flex-row items-center gap-1.5 mt-3 ml-1">
-          <Ionicons name="arrow-up" size={15} color="#15803D" />
-          <Text className="text-sm font-bold text-green-700">
+        {/* Figure on its own line, with the wallet tile leading it. */}
+        <View className="flex-row items-center gap-4 mt-1">
+          {/* Wallet tile, as drawn: light-blue square, blue glyph. */}
+          <View className="bg-blue-100 rounded-2xl w-14 h-14 items-center justify-center">
+            <Ionicons name="wallet" size={26} color="#2563EB" />
+          </View>
+
+          <View className="flex-row items-end gap-1.5">
+            <Text className="text-xl font-bold text-slate-800">{currency}</Text>
+            <Text className="text-4xl font-bold text-slate-900">{amount}</Text>
+          </View>
+        </View>
+
+        {/* Delta row. */}
+        <View className="flex-row items-center gap-1.5 mt-3">
+          <Ionicons name="arrow-up" size={15} color="#16A34A" />
+          <Text className="text-sm font-bold text-green-600">
             + {currency} {monthlyAmount}
           </Text>
-          <Text className="text-sm font-medium text-green-700">{caption}</Text>
+          <Text className="text-sm font-medium text-slate-500">{caption}</Text>
         </View>
       </View>
     </LinearGradient>

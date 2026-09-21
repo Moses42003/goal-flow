@@ -1,17 +1,28 @@
 import SaveCard from "@/components/savecard";
+import { useThemeColors } from "@/lib/theme";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { ScrollView, StatusBar, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SaveScreen() {
+  const c = useThemeColors();
+
   return (
-    <SafeAreaView className="flex-1 pt-5 px-5 bg-white">
+    <SafeAreaView
+      className="flex-1 pt-5 px-5"
+      style={{ backgroundColor: c.background }}
+    >
       <View className="mb-2">
         <View className="flex-row items-center justify-between mb-3">
           <View className="gap-1">
-            <Text className="text-3xl font-bold">Save Money</Text>
-            <Text className="text-lg text-gray-500 font-semibold">
+            <Text className="text-3xl font-bold" style={{ color: c.text }}>
+              Save Money
+            </Text>
+            <Text
+              className="text-lg font-semibold"
+              style={{ color: c.textMuted }}
+            >
               Choose how you want to save.
             </Text>
           </View>
@@ -48,14 +59,24 @@ export default function SaveScreen() {
           iconColor="#F97316"
         />
 
-        {/* Tip banner — dark navy, matching the design. */}
-        <View className="my-3 rounded-2xl bg-slate-900 p-4 flex-row items-start gap-3">
+        {/* Tip banner. The design draws this dark on a light page; keeping it
+            as an "inverse" surface is deliberate, and it still works under a
+            dark theme because the accent tile carries the contrast. */}
+        <View
+          className="my-3 rounded-2xl p-4 flex-row items-start gap-3"
+          style={{ backgroundColor: c.tipSurface }}
+        >
           <View className="bg-blue-600 rounded-full w-9 h-9 items-center justify-center">
             <Ionicons name="bulb-outline" size={20} color="#FFFFFF" />
           </View>
           <View className="flex-1 gap-1">
-            <Text className="text-base font-bold text-white">Saving Tip</Text>
-            <Text className="text-sm text-gray-300 font-medium">
+            <Text className="text-base font-bold" style={{ color: c.tipText }}>
+              Saving Tip
+            </Text>
+            <Text
+              className="text-sm font-medium"
+              style={{ color: c.tipTextMuted }}
+            >
               Small amounts add up. Save something every day.
             </Text>
           </View>
