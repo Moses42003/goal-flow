@@ -1,44 +1,15 @@
 import ProgressBar from "@/components/progressbar";
-import { useThemeColors } from "@/lib/theme";
+import { GoalAccent, useThemeColors } from "@/lib/theme";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
 /**
- * Accent palette for the goal's icon tile and progress bar.
- *
- * Declared as complete literals (not interpolated strings) so NativeWind's
- * compiler can see every class name it needs to emit — `bg-${accent}-100`
- * would silently produce no style at runtime.
+ * Goal accent. Blue/violet/green/amber match the four tinted cards in the
+ * design; every colour comes from `useThemeColors()` so the same card repaints
+ * correctly in dark mode (pastel literals would flare).
  */
-type Accent = "blue" | "orange" | "green" | "violet";
-
-const TILE: Record<Accent, string> = {
-  blue: "bg-blue-100",
-  orange: "bg-orange-100",
-  green: "bg-green-100",
-  violet: "bg-violet-100",
-};
-
-/**
- * Accent fills for the progress bar, as literal hex.
- *
- * Hex rather than a class because `ProgressBar` animates a colour prop — it
- * draws the fill with a transform, which a NativeWind class cannot drive.
- */
-const FILL_HEX: Record<Accent, string> = {
-  blue: "#2563EB",
-  orange: "#F97316",
-  green: "#16A34A",
-  violet: "#7C3AED",
-};
-
-const ICON_COLOR: Record<Accent, string> = {
-  blue: "#2563EB",
-  orange: "#F97316",
-  green: "#16A34A",
-  violet: "#7C3AED",
-};
+type Accent = GoalAccent;
 
 interface Props {
   /** Goal title, e.g. "Buy a laptop". */
@@ -90,12 +61,13 @@ export default function GoalCard({
       activeOpacity={0.7}
       onPress={onPress}
       className="rounded-2xl p-3 my-3 flex-row gap-3"
-      style={{ backgroundColor: c.surface, borderWidth: 1, borderColor: c.border }}
+      style={{ backgroundColor: c.goalTint[accent] }}
     >
       <View
-        className={`w-16 h-16 rounded-2xl items-center justify-center ${TILE[accent]}`}
+        className="w-16 h-16 rounded-2xl items-center justify-center"
+        style={{ backgroundColor: c.goalTile[accent] }}
       >
-        <Ionicons name={icon} size={32} color={ICON_COLOR[accent]} />
+        <Ionicons name={icon} size={32} color={c.goalFill[accent]} />
       </View>
 
       <View className="gap-1.5 flex-1 justify-center">
@@ -118,8 +90,8 @@ export default function GoalCard({
           <View className="flex-1">
             <ProgressBar
               progress={ratio}
-              trackColor={c.surfaceMuted}
-              fillColor={FILL_HEX[accent]}
+              trackColor={c.scheme === "dark" ? c.surfaceMuted : "#FFFFFF"}
+              fillColor={c.goalFill[accent]}
               delay={animationDelay}
             />
           </View>

@@ -1,3 +1,4 @@
+import { useThemeColors } from "@/lib/theme";
 import React, { useState } from "react";
 import { LayoutChangeEvent, StyleSheet, View } from "react-native";
 import Svg, {
@@ -38,6 +39,9 @@ export default function HomeHeaderBackdrop({
   // Measured rather than derived from window width, so the curve stays correct
   // inside a split view or on a foldable, where the screen is not the container.
   const [width, setWidth] = useState(0);
+  // The sky is a theme gradient: bright azure on light, deep navy melting into
+  // the page background on dark — so the wave never glows out of dark mode.
+  const c = useThemeColors();
 
   const onLayout = (e: LayoutChangeEvent) =>
     setWidth(e.nativeEvent.layout.width);
@@ -90,12 +94,12 @@ export default function HomeHeaderBackdrop({
           preserveAspectRatio="none"
         >
           <Defs>
-            {/* Diagonal azure wash, matching the design's lighting. */}
+            {/* Sky stops come from the theme, so the wave repaints with it. */}
             <SvgGradient id="sky" x1="0.1" y1="0" x2="0.9" y2="1">
-              <Stop offset="0" stopColor="#1E5FE0" />
-              <Stop offset="0.45" stopColor="#2F7BF6" />
-              <Stop offset="0.8" stopColor="#6FB6F9" />
-              <Stop offset="1" stopColor="#BBDDFB" />
+              <Stop offset="0" stopColor={c.waveColors[0]} />
+              <Stop offset="0.45" stopColor={c.waveColors[1]} />
+              <Stop offset="0.8" stopColor={c.waveColors[2]} />
+              <Stop offset="1" stopColor={c.waveColors[3]} />
             </SvgGradient>
           </Defs>
 
@@ -104,7 +108,7 @@ export default function HomeHeaderBackdrop({
 
           {/* Cloud lobes. Wide, shallow ellipses in slightly lighter blue, so
               the field reads as sky rather than as a flat gradient. */}
-          <EllipseLobes />
+          <EllipseLobes color={c.waveCloud} opacity={c.waveCloudOpacity} />
         </Svg>
       )}
     </View>
@@ -112,18 +116,24 @@ export default function HomeHeaderBackdrop({
 }
 
 /** Cloud highlights. Kept separate purely to keep the main render readable. */
-function EllipseLobes() {
+function EllipseLobes({
+  color,
+  opacity,
+}: {
+  color: string;
+  opacity: number;
+}) {
   return (
     <>
       <Path
         d="M -40 120 a 150 90 0 1 0 300 0 a 150 90 0 1 0 -300 0"
-        fill="#FFFFFF"
-        fillOpacity={0.08}
+        fill={color}
+        fillOpacity={opacity}
       />
       <Path
         d="M 200 60 a 140 80 0 1 0 280 0 a 140 80 0 1 0 -280 0"
-        fill="#FFFFFF"
-        fillOpacity={0.08}
+        fill={color}
+        fillOpacity={opacity}
       />
     </>
   );

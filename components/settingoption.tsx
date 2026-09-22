@@ -24,7 +24,12 @@ export default function SettingOption({
     >
       <View className="gap-3 flex-row items-center">
         <View className=" p-2 rounded-2xl">
-          <Ionicons name={icon} color={color} size={24} />
+          <Ionicons
+            // @ts-ignore
+            name={icon}
+            color={color}
+            size={24}
+          />
         </View>
         <View className="gap-1">
           <Text className="text-xl font-semibold dark:text-white">

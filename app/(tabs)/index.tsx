@@ -71,7 +71,7 @@ export default function HomeTabScreen() {
         <GoalCard
           title="Emergency Fund"
           icon="shield-checkmark-outline"
-          accent="green"
+          accent="amber"
           saved="800"
           target="2,000"
           progress={0.4}

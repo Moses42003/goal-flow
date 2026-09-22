@@ -58,7 +58,7 @@ export default function GoalsScreen() {
         <GoalCard
           title="Emergency Fund"
           icon="shield-checkmark-outline"
-          accent="green"
+          accent="amber"
           saved="800"
           target="2,000"
           progress={0.4}
@@ -76,7 +76,7 @@ export default function GoalsScreen() {
         <GoalCard
           title="New Phone"
           icon="phone-portrait-outline"
-          accent="orange"
+          accent="amber"
           saved="2,100"
           target="3,000"
           progress={0.7}
