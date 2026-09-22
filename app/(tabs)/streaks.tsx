@@ -82,7 +82,11 @@ export default function StreaksScreen() {
         {/* Hero: glowing flame ring with the current streak count. */}
         <View
           className="rounded-3xl py-8 items-center"
-          style={{ backgroundColor: c.surface, borderWidth: 1, borderColor: c.border }}
+          style={{
+            backgroundColor: c.surface,
+            borderWidth: 1,
+            borderColor: c.border,
+          }}
         >
           <View className="items-center justify-center">
             {/* Halo behind the ring, so the flame appears to be lit. */}
@@ -93,7 +97,7 @@ export default function StreaksScreen() {
               className="absolute w-36 h-36 rounded-full opacity-70"
               style={{ borderRadius: 72 }}
             />
-            <View className="w-28 h-28 rounded-full items-center justify-center bg-white/70">
+            <View className="w-28 h-28 rounded-full items-center justify-center bg-gray-50/10 p-3">
               <Ionicons name="flame" size={38} color="#EA580C" />
               <Text className="text-2xl font-bold text-orange-600">7</Text>
               <Text className="text-[10px] font-bold text-orange-500 tracking-wider">
@@ -102,10 +106,16 @@ export default function StreaksScreen() {
             </View>
           </View>
 
-          <Text className="text-base font-semibold mt-4" style={{ color: c.text }}>
+          <Text
+            className="text-base font-semibold mt-4"
+            style={{ color: c.text }}
+          >
             You&apos;re doing great!
           </Text>
-          <Text className="text-sm font-medium mt-0.5" style={{ color: c.textMuted }}>
+          <Text
+            className="text-sm font-medium mt-0.5"
+            style={{ color: c.textMuted }}
+          >
             Save today to keep it alive.
           </Text>
         </View>
@@ -121,7 +131,10 @@ export default function StreaksScreen() {
               <Text className="text-xl font-bold" style={{ color: c.text }}>
                 {stat.value}
               </Text>
-              <Text className="text-xs font-semibold" style={{ color: c.textMuted }}>
+              <Text
+                className="text-xs font-semibold"
+                style={{ color: c.textMuted }}
+              >
                 {stat.label}
               </Text>
             </View>
@@ -131,7 +144,11 @@ export default function StreaksScreen() {
         {/* Week strip. */}
         <View
           className="rounded-2xl p-4 mt-4"
-          style={{ backgroundColor: c.surface, borderWidth: 1, borderColor: c.border }}
+          style={{
+            backgroundColor: c.surface,
+            borderWidth: 1,
+            borderColor: c.border,
+          }}
         >
           <Text className="text-base font-bold mb-3" style={{ color: c.text }}>
             This Week
@@ -140,9 +157,14 @@ export default function StreaksScreen() {
             {WEEK.map((entry, index) => (
               <View key={index} className="items-center gap-2">
                 <View
-                  className={`w-10 h-10 rounded-full items-center justify-center ${entry.active ? "bg-orange-500" : ""
-                    }`}
-                  style={entry.active ? undefined : { backgroundColor: c.surfaceMuted }}
+                  className={`w-10 h-10 rounded-full items-center justify-center ${
+                    entry.active ? "bg-orange-500" : ""
+                  }`}
+                  style={
+                    entry.active
+                      ? undefined
+                      : { backgroundColor: c.surfaceMuted }
+                  }
                 >
                   <Ionicons
                     name={entry.active ? "checkmark" : "ellipse-outline"}
@@ -150,7 +172,10 @@ export default function StreaksScreen() {
                     color={entry.active ? "#FFFFFF" : c.textMuted}
                   />
                 </View>
-                <Text className="text-xs font-semibold" style={{ color: c.textMuted }}>
+                <Text
+                  className="text-xs font-semibold"
+                  style={{ color: c.textMuted }}
+                >
                   {entry.day}
                 </Text>
               </View>
@@ -161,7 +186,11 @@ export default function StreaksScreen() {
         {/* Weekly progress toward a full week. */}
         <View
           className="rounded-2xl p-4 mt-4"
-          style={{ backgroundColor: c.surface, borderWidth: 1, borderColor: c.border }}
+          style={{
+            backgroundColor: c.surface,
+            borderWidth: 1,
+            borderColor: c.border,
+          }}
         >
           <View className="flex-row items-center justify-between mb-2">
             <Text className="text-base font-bold" style={{ color: c.text }}>
@@ -175,25 +204,36 @@ export default function StreaksScreen() {
             fillColor="#F97316"
             height={10}
           />
-          <Text className="text-sm font-medium mt-3" style={{ color: c.textMuted }}>
+          <Text
+            className="text-sm font-medium mt-3"
+            style={{ color: c.textMuted }}
+          >
             One more day to complete your week.
           </Text>
         </View>
 
         {/* Milestone badges. */}
-        <Text className="text-base font-bold mt-5 mb-3" style={{ color: c.text }}>
+        <Text
+          className="text-base font-bold mt-5 mb-3"
+          style={{ color: c.text }}
+        >
           Badges
         </Text>
         <View className="flex-row justify-between gap-3">
           {BADGES.map((badge) => (
             <View
               key={badge.label}
-              className={`flex-1 rounded-2xl py-3 items-center gap-1.5 ${badge.done ? "bg-orange-50 border-[1px] border-orange-200" : ""
-                }`}
+              className={`flex-1 rounded-2xl py-3 items-center gap-1.5 ${
+                badge.done ? "bg-orange-50 border-[1px] border-orange-200" : ""
+              }`}
               style={
                 badge.done
                   ? undefined
-                  : { backgroundColor: c.surfaceMuted, borderWidth: 1, borderColor: c.border }
+                  : {
+                      backgroundColor: c.surfaceMuted,
+                      borderWidth: 1,
+                      borderColor: c.border,
+                    }
               }
             >
               <Ionicons
@@ -212,36 +252,58 @@ export default function StreaksScreen() {
         </View>
 
         {/* Streak history list, as drawn. */}
-        <Text className="text-base font-bold mt-5 mb-3" style={{ color: c.text }}>
+        <Text
+          className="text-base font-bold mt-5 mb-3"
+          style={{ color: c.text }}
+        >
           Streak History
         </Text>
         <View
           className="rounded-2xl overflow-hidden"
-          style={{ backgroundColor: c.surface, borderWidth: 1, borderColor: c.border }}
+          style={{
+            backgroundColor: c.surface,
+            borderWidth: 1,
+            borderColor: c.border,
+          }}
         >
           {HISTORY.map((row, index) => (
             <View key={row.month}>
               <View className="flex-row items-center justify-between px-4 py-3.5">
                 <View className="gap-0.5">
-                  <Text className="text-base font-semibold" style={{ color: c.text }}>
+                  <Text
+                    className="text-base font-semibold"
+                    style={{ color: c.text }}
+                  >
                     {row.month}
                   </Text>
-                  <Text className="text-xs font-medium" style={{ color: c.textMuted }}>
+                  <Text
+                    className="text-xs font-medium"
+                    style={{ color: c.textMuted }}
+                  >
                     Best: {row.best} days
                   </Text>
                 </View>
                 <View className="flex-row items-center gap-1">
                   <Ionicons name="flame" size={16} color="#EA580C" />
-                  <Text className="text-base font-bold" style={{ color: c.text }}>
+                  <Text
+                    className="text-base font-bold"
+                    style={{ color: c.text }}
+                  >
                     {row.days}
                   </Text>
-                  <Text className="text-sm font-medium" style={{ color: c.textMuted }}>
+                  <Text
+                    className="text-sm font-medium"
+                    style={{ color: c.textMuted }}
+                  >
                     days
                   </Text>
                 </View>
               </View>
               {index < HISTORY.length - 1 && (
-                <View className="h-[1px] mx-4" style={{ backgroundColor: c.divider }} />
+                <View
+                  className="h-[1px] mx-4"
+                  style={{ backgroundColor: c.divider }}
+                />
               )}
             </View>
           ))}

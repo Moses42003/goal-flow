@@ -1,9 +1,10 @@
 import TabBarIcon, {
-    TAB_ACTIVE,
-    TAB_INACTIVE,
-    TabBarActionIcon,
-    TabBarLabel,
+  TAB_ACTIVE,
+  TAB_INACTIVE,
+  TabBarActionIcon,
+  TabBarLabel,
 } from "@/components/TabBarIcon";
+import { useThemeColors } from "@/lib/theme";
 import { Tabs } from "expo-router";
 import React from "react";
 import { StyleSheet } from "react-native";
@@ -22,6 +23,7 @@ function label(text: string) {
 }
 
 export default function TabsLayout() {
+  const c = useThemeColors();
   return (
     <Tabs
       screenOptions={{
@@ -38,9 +40,9 @@ export default function TabsLayout() {
           height: 72,
           paddingTop: 9,
           paddingBottom: 12,
-          backgroundColor: "#FFFFFF",
+          backgroundColor: c.background,
           borderTopWidth: StyleSheet.hairlineWidth,
-          borderTopColor: "#E2E8F0",
+          borderTopColor: "gray",
         },
       }}
     >

@@ -1,3 +1,4 @@
+import { useThemeColors } from "@/lib/theme";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -27,11 +28,13 @@ export default function SaveCard({
   color = "#EFF6FF",
   iconColor,
 }: Props) {
+  const c = useThemeColors();
   return (
     <TouchableOpacity
       activeOpacity={0.7}
-      className="border-[1px] border-gray-200 bg-white rounded-2xl p-3 my-3 flex-row gap-3 items-center"
+      className="border-[1px] border-gray-200 dark:border-gray-600 rounded-2xl p-3 my-3 flex-row gap-3 items-center"
       onPress={onPress}
+      style={{ backgroundColor: c.surface }}
     >
       {/* Tint is applied via `style` because `color` is a runtime value the
           NativeWind compiler cannot resolve into a class. */}
@@ -43,8 +46,8 @@ export default function SaveCard({
       </View>
 
       <View className="gap-1 flex-1">
-        <Text className="text-lg font-semibold">{title}</Text>
-        <Text className="text-sm text-gray-500 font-medium">{description}</Text>
+        <Text className="text-lg dark:text-white font-semibold">{title}</Text>
+        <Text className="text-sm text-gray-400 font-medium">{description}</Text>
       </View>
 
       <View className="items-center justify-center">

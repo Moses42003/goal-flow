@@ -97,14 +97,9 @@ export default function HomeHeaderBackdrop({
               <Stop offset="0.8" stopColor="#6FB6F9" />
               <Stop offset="1" stopColor="#BBDDFB" />
             </SvgGradient>
-            {/* Mint band beneath the wave. */}
-            <SvgGradient id="mint" x1="0" y1="0" x2="1" y2="1">
-              <Stop offset="0" stopColor="#DCF2E8" />
-              <Stop offset="1" stopColor="#EFFAF5" />
-            </SvgGradient>
           </Defs>
 
-          <Path d={mintPath} fill="url(#mint)" />
+          {/* <Path d={mintPath} fill="url(#mint)" /> */}
           <Path d={bluePath} fill="url(#sky)" />
 
           {/* Cloud lobes. Wide, shallow ellipses in slightly lighter blue, so

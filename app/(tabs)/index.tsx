@@ -45,7 +45,7 @@ export default function HomeTabScreen() {
 
           <TouchableOpacity
             activeOpacity={0.6}
-            className="rounded-full w-12 h-12 bg-white items-center justify-center"
+            className="rounded-full w-16 h-16 bg-white items-center justify-center"
           >
             <Ionicons name="person" size={24} color="#1D4ED8" />
           </TouchableOpacity>
