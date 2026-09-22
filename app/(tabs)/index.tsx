@@ -19,7 +19,10 @@ export default function HomeTabScreen() {
   const c = useThemeColors();
 
   return (
-    <SafeAreaView className="flex-1 pt-5 px-5 bg-white">
+    <SafeAreaView
+      className="flex-1 pt-5 px-5 bg-white"
+      style={{ backgroundColor: c.background }}
+    >
       {/* Blue cloud field behind the greeting and the savings card. */}
       <HomeHeaderBackdrop />
       {/* Header: greeting on the left, bell + avatar on the right. */}
