@@ -6,7 +6,12 @@ interface Props {
   color: string;
   title: string;
   onPress?: () => void;
-  icon?: string;
+  /**
+   * Glyph name. Typed against the icon set's own map rather than `string`:
+   * `Ionicons` rejects an unknown name, and widening this to `string` only
+   * moved that failure from compile time to runtime.
+   */
+  icon?: keyof typeof Ionicons.glyphMap;
   iconPosition?: "left";
 }
 
@@ -20,6 +25,7 @@ export default function CustomButton({
   return (
     <TouchableOpacity
       activeOpacity={0.6}
+      onPress={onPress}
       className="p-3 border-[1px] rounded-3xl border-red-400 dark:bg-red-300/25 bg-red-100 items-center"
     >
       {iconPosition === "left" ? (

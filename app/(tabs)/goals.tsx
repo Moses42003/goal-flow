@@ -1,6 +1,7 @@
 import GoalCard from "@/components/goalcard";
 import { useThemeColors } from "@/lib/theme";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React from "react";
 import {
   ScrollView,
@@ -15,13 +16,19 @@ export default function GoalsScreen() {
   const c = useThemeColors();
 
   return (
-    <SafeAreaView className="flex-1 pt-5 px-5" style={{ backgroundColor: c.background }}>
+    <SafeAreaView
+      className="flex-1 pt-5 px-5"
+      style={{ backgroundColor: c.background }}
+    >
       <View className="flex-row items-start justify-between mb-4">
         <View className="gap-0.5 flex-1">
           <Text className="text-3xl font-bold" style={{ color: c.text }}>
             Goals
           </Text>
-          <Text className="text-base font-medium" style={{ color: c.textMuted }}>
+          <Text
+            className="text-base font-medium"
+            style={{ color: c.textMuted }}
+          >
             Turn your dreams into plans.
           </Text>
         </View>
@@ -29,6 +36,9 @@ export default function GoalsScreen() {
         <TouchableOpacity
           activeOpacity={0.6}
           className="bg-blue-600 rounded-full w-11 h-11 items-center justify-center"
+          onPress={() => router.push("/goals/create")}
+          accessibilityRole="button"
+          accessibilityLabel="Create a goal"
         >
           <Ionicons name="add" size={26} color="#FFFFFF" />
         </TouchableOpacity>
@@ -40,12 +50,16 @@ export default function GoalsScreen() {
           <TouchableOpacity
             key={filter}
             activeOpacity={0.7}
-            className={`h-9 px-4 rounded-full items-center justify-center ${index === 0 ? "bg-blue-600" : "bg-blue-50 border-[1px] border-blue-100"
-              }`}
+            className={`h-9 px-4 rounded-full items-center justify-center ${
+              index === 0
+                ? "bg-blue-600"
+                : "bg-blue-50 border-[1px] border-blue-100"
+            }`}
           >
             <Text
-              className={`text-sm font-semibold ${index === 0 ? "text-white" : "text-blue-700"
-                }`}
+              className={`text-sm font-semibold ${
+                index === 0 ? "text-white" : "text-blue-700"
+              }`}
             >
               {filter}
             </Text>
@@ -54,7 +68,7 @@ export default function GoalsScreen() {
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
-        <GoalCard />
+        <GoalCard onPress={() => router.push("/goals/details")} />
         <GoalCard
           title="Emergency Fund"
           icon="shield-checkmark-outline"
@@ -83,17 +97,10 @@ export default function GoalsScreen() {
           timeLeft="3 months left"
         />
 
-        <View className="h-24" />
+        <View className="h-10" />
       </ScrollView>
 
-      <TouchableOpacity
-        activeOpacity={0.8}
-        className="absolute bottom-6 right-5 bg-blue-600 rounded-full w-14 h-14 items-center justify-center shadow-lg"
-      >
-        <Ionicons name="add" size={30} color="#FFFFFF" />
-      </TouchableOpacity>
-
-      <StatusBar barStyle={"dark-content"} />
+      <StatusBar barStyle={c.barStyle} />
     </SafeAreaView>
   );
 }

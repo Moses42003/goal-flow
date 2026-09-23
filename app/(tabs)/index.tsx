@@ -5,6 +5,7 @@ import StreakSaveCard from "@/components/streaksavecarc";
 import TotalSavingCard from "@/components/totalsavecard";
 import { useThemeColors } from "@/lib/theme";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React from "react";
 import {
   ScrollView,
@@ -62,12 +63,15 @@ export default function HomeTabScreen() {
           <Text className="text-xl font-bold" style={{ color: c.text }}>
             Your Goals
           </Text>
-          <TouchableOpacity activeOpacity={0.6}>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={() => router.push("/goals")}
+          >
             <Text className="text-blue-600 font-semibold">View all</Text>
           </TouchableOpacity>
         </View>
 
-        <GoalCard />
+        <GoalCard onPress={() => router.push("/goals/details")} />
         <GoalCard
           title="Emergency Fund"
           icon="shield-checkmark-outline"
@@ -104,18 +108,10 @@ export default function HomeTabScreen() {
           <QuickAction icon="people-outline" label="Refer Friend" />
         </View>
 
-        <View className="h-24" />
+        <View className="h-10" />
       </ScrollView>
 
-      {/* Floating action button, bottom-right. */}
-      <TouchableOpacity
-        activeOpacity={0.8}
-        className="absolute bottom-6 right-5 bg-blue-600 rounded-full w-14 h-14 items-center justify-center shadow-lg"
-      >
-        <Ionicons name="add" size={30} color="#FFFFFF" />
-      </TouchableOpacity>
-
-      <StatusBar barStyle={"dark-content"} />
+      <StatusBar barStyle={c.barStyle} />
     </SafeAreaView>
   );
 }

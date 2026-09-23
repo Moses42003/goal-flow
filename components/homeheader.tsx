@@ -65,21 +65,6 @@ export default function HomeHeaderBackdrop({
     `Z`,
   ].join(" ");
 
-  /**
-   * The pale mint band, tracing the same contour offset downward.
-   *
-   * Drawn as its own shape rather than as a border on the blue, because the two
-   * have different colours and the band is wider on the left where the wave
-   * dips deepest.
-   */
-  const mintPath = [
-    `M 0 ${waveY - 6}`,
-    `C ${VB_W * 0.4} ${waveY - 26}, ${VB_W * 0.66} ${waveY + 60}, ${VB_W} ${waveY + 18}`,
-    `V ${VB_H}`,
-    `H 0`,
-    `Z`,
-  ].join(" ");
-
   return (
     <View
       pointerEvents="none"
@@ -103,7 +88,6 @@ export default function HomeHeaderBackdrop({
             </SvgGradient>
           </Defs>
 
-          {/* <Path d={mintPath} fill="url(#mint)" /> */}
           <Path d={bluePath} fill="url(#sky)" />
 
           {/* Cloud lobes. Wide, shallow ellipses in slightly lighter blue, so
