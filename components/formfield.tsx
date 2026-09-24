@@ -26,6 +26,14 @@ interface Props {
   muted?: boolean;
   /** Focus ring colour; falls back to the theme's primary blue. */
   accent?: string;
+  /**
+   * Shows a `used/max` counter under the field and enforces the cap. Only set
+   * this where the design shows a counter — a limit nobody stated is just a
+   * silently truncated input.
+   */
+  maxLength?: number;
+  /** Caps the input to one line; used where the design shows a single row. */
+  singleLine?: boolean;
 }
 
 /**
@@ -50,9 +58,14 @@ export default function FormField({
   keyboardType,
   muted = false,
   accent = "#2563EB",
+  maxLength,
+  singleLine = true,
 }: Props) {
   const c = useThemeColors();
   const [focused, setFocused] = useState(false);
+
+  // Only meaningful alongside a cap; without one there is no denominator.
+  const count = maxLength !== undefined ? value.length : 0;
 
   const trailing = trailingIcon && (
     <Ionicons
@@ -93,13 +106,18 @@ export default function FormField({
           placeholder={placeholder}
           placeholderTextColor={c.textMuted}
           keyboardType={keyboardType}
+          maxLength={maxLength}
+          multiline={!singleLine}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           // `minHeight` rather than a fixed `height`: long values and large
           // system font sizes grow the field instead of clipping the text.
           style={{
             flex: 1,
-            minHeight: 48,
+            minHeight: singleLine ? 48 : 84,
+            // Top-align a multi-line input so the caret sits on the first row.
+            textAlignVertical: singleLine ? "center" : "top",
+            paddingTop: singleLine ? 0 : 12,
             color: muted ? c.textMuted : c.text,
             fontSize: 15,
           }}
@@ -117,6 +135,19 @@ export default function FormField({
           trailing
         )}
       </View>
+
+      {maxLength !== undefined && (
+        <Text className="text-xs font-medium mt-1.5">
+          <Text
+            style={{
+              color: count >= maxLength ? "#DC2626" : c.textMuted,
+            }}
+          >
+            {count}
+          </Text>
+          <Text style={{ color: c.textMuted }}>/{maxLength}</Text>
+        </Text>
+      )}
     </View>
   );
 }

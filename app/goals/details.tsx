@@ -45,12 +45,13 @@ export default function GoalDetails() {
 
   return (
     <SafeAreaView className="flex-1" style={{ backgroundColor: c.background }}>
+      <View className="p-5">
+        <BackHeader title="Goal Details" />
+      </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerClassName="px-5 pt-4 pb-8"
       >
-        <BackHeader title="Goal Details" />
-
         {/* Hero card. */}
         <View
           className="rounded-3xl p-5 mt-5"
@@ -179,7 +180,9 @@ export default function GoalDetails() {
               </View>
 
               <View
-                className={index < TIMELINE.length - 1 ? "pb-5 flex-1" : "flex-1"}
+                className={
+                  index < TIMELINE.length - 1 ? "pb-5 flex-1" : "flex-1"
+                }
               >
                 <Text
                   className="text-sm font-semibold"
