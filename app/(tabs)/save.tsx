@@ -2,6 +2,7 @@ import SaveCard from "@/components/savecard";
 import SavingBanner from "@/components/savingbanner";
 import { useThemeColors } from "@/lib/theme";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React from "react";
 import { ScrollView, StatusBar, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -37,6 +38,7 @@ export default function SaveScreen() {
           icon="card-outline"
           color="#DBEAFE"
           iconColor="#2563EB"
+          onPress={() => router.push("/goals/create")}
         />
         <SaveCard
           title="Manual Saving"
@@ -44,6 +46,7 @@ export default function SaveScreen() {
           icon="add-circle-outline"
           color="#DCFCE7"
           iconColor="#16A34A"
+          onPress={() => router.push("/save/manual")}
         />
         <SaveCard
           title="Automatic Saving"
@@ -51,6 +54,7 @@ export default function SaveScreen() {
           icon="refresh-outline"
           color="#EDE9FE"
           iconColor="#7C3AED"
+          onPress={() => router.push("/save/automatic")}
         />
         <SaveCard
           title="Flexible Saving"
@@ -58,6 +62,7 @@ export default function SaveScreen() {
           icon="wallet-outline"
           color="#FFEDD5"
           iconColor="#F97316"
+          onPress={() => router.push("/save/flexible")}
         />
 
         {/* Illustration banner: the artwork plus its caption. */}
