@@ -103,8 +103,17 @@ export default function HomeTabScreen() {
 
         <Text className="text-xl font-bold mt-2 mb-3">Quick Actions</Text>
         <View className="flex-row justify-between gap-3">
-          <QuickAction icon="add-circle" label="Save Money" variant="solid" />
-          <QuickAction icon="cash-outline" label="Withdraw" />
+          <QuickAction
+            icon="add-circle"
+            label="Save Money"
+            variant="solid"
+            onPress={() => router.push("/save/manual")}
+          />
+          <QuickAction
+            icon="cash-outline"
+            label="Withdraw"
+            onPress={() => router.push("/save/withdraw")}
+          />
           <QuickAction icon="people-outline" label="Refer Friend" />
         </View>
 

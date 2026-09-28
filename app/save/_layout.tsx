@@ -13,6 +13,8 @@ export default function SaveLayout() {
       <Stack.Screen name="manual" />
       <Stack.Screen name="automatic" />
       <Stack.Screen name="flexible" />
+      <Stack.Screen name="withdraw" />
+      <Stack.Screen name="confirm-withdrawal" />
     </Stack>
   );
 }

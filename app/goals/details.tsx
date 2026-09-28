@@ -264,8 +264,17 @@ export default function GoalDetails() {
 
         <TouchableOpacity
           activeOpacity={0.85}
+          onPress={() => router.push("/save/withdraw")}
+          className="rounded-2xl py-4 items-center mt-6 flex-row justify-center gap-2 bg-blue-600"
+        >
+          <Ionicons name="arrow-up-circle" size={20} color="#FFFFFF" />
+          <Text className="text-base font-bold text-white">Withdraw</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          activeOpacity={0.85}
           onPress={() => router.push("/goals/edit")}
-          className="rounded-2xl py-4 items-center mt-6 flex-row justify-center gap-2"
+          className="rounded-2xl py-4 items-center mt-3 flex-row justify-center gap-2"
           style={{
             backgroundColor: c.surface,
             borderWidth: 1,
