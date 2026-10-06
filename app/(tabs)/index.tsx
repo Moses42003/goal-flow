@@ -43,6 +43,9 @@ export default function HomeTabScreen() {
           <TouchableOpacity
             activeOpacity={0.6}
             className="bg-white/20 rounded-full w-11 h-11 items-center justify-center"
+            onPress={() => router.push("/notifications")}
+            accessibilityRole="button"
+            accessibilityLabel="Notifications"
           >
             <Ionicons name="notifications-outline" size={22} color="#FFFFFF" />
           </TouchableOpacity>
